@@ -795,75 +795,53 @@
           <p>Monday – Saturday: 9:00 am – 7:00 pm<br>Sunday: By appointment only</p>
         </div>
       </div>
-     <!-- <div class="reveal">
-        <form class="contact-form" id="contact-form" onsubmit="submitForm(event)">
+
+      <div class="reveal">
+        <form class="contact-form" id="contact-form" onsubmit="handleSubmit(event)">
           <div class="form-row">
             <div class="form-group">
-              <label for="fname">Full Name</label>
-              <input type="text" id="fname" name="fname" placeholder="Liza jackson" required />
+              <label for="fname">Full Name *</label>
+              <input type="text" id="fname" placeholder="Liza Jackson" required />
             </div>
             <div class="form-group">
-              <label for="phone">Phone Number</label>
-              <input type="tel" id="phone" name="phone" placeholder="+91 9797979730" />
+              <label for="phone">Phone Number *</label>
+              <input type="tel" id="phone" placeholder="+91 9797979730" required />
             </div>
           </div>
           <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="jane@example.com" required />
-          </div>
-          <div class="form-group">
-            <label for="service">Session Type</label>
-            <select id="service" name="service">
-              <option value="">Select a session...</option>
-              <option>Newborn Photography</option>
-              <option>Maternity Shoot</option>
-              <option>Toddler Session</option>
-              <option>Family Portrait</option>
-              <option>Other</option>
+            <label for="service">Service Interested In *</label>
+            <select id="service" required>
+              <option value="">Select a service…</option>
+              <option value="Wedding Photography">Wedding Photography</option>
+              <option value="Pre-Wedding Shoot">Pre-Wedding Shoot</option>
+              <option value="Baby Shoot">Baby Shoot</option>
+              <option value="Maternity Shoot">Maternity Shoot</option>
+              <option value="Birthday Photography">Birthday Photography</option>
+              <option value="Engagement Shoot">Engagement Shoot</option>
+              <option value="Cinematic Videography">Cinematic Videography</option>
             </select>
           </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="date">Start Date</label>    
+              <input type="date" id="date" />
+            </div>
+            <div class="form-group">
+              <label for="enddate">End Date (Optional)</label>
+              <input type="date" id="enddate" />
+            </div>
+          </div>
           <div class="form-group">
-            <label for="message">Your Message</label>
-            <textarea id="message" name="message" placeholder="Tell us about the moment you'd like to capture..."></textarea>
+            <label for="location">Event Location</label>
+            <input type="text" id="location" placeholder="Rajkot, Gujarat" />
           </div>
-          <div class="form-submit">
-            <button type="submit" class="btn btn-dark" style="width:100%; padding:16px;">Send Message</button>
+          <div class="form-group">
+            <label for="message">Tell Us More</label>
+            <textarea id="message" placeholder="Share any details about your event, venue, or vision…"></textarea>
           </div>
-          <div class="form-msg" id="form-msg"></div>
+          <button type="submit" class="btn btn-gold" style="width:100%; padding:16px;">Send Enquiry</button>
         </form>
-      </div>-->
-      <div class="form-group">
-        <label for="service">Service Interested In</label>
-        <select id="service">
-          <option value="">Select a service…</option>
-          <option>Wedding Photography</option>
-          <option>Pre-Wedding Shoot</option>
-          <option>Baby Shoot</option>
-          <option>Maternity Shoot</option>
-          <option>Birthday Photography</option>
-          <option>Engagement Shoot</option>
-          <option>Cinematic Videography</option>
-        </select>
       </div>
-      <div class="form-group">
-        <label for="date">Event / Shoot Date</label>    
-        <input type="date" id="date" />
-      </div>
-      <div class="form-group">
-       <label for="enddate">End Date (Optional)</label>
-         <input type="date" id="enddate" />
-       </div>
-      
-        <div class="form-group">
-  <label for="location">Event Location</label>
-  <input type="text" id="location" placeholder="Rajkot, Gujarat" />
-        </div>
-        <label for="message">Tell Us More</label>
-        <textarea id="message" placeholder="Share any details about your event, venue, or vision…"></textarea>
-      </div>
-      <button type="submit" class="btn btn-gold" style="align-self:flex-start;">Send Enquiry</button>
-    </form>
-  </div>
     </div>
   </div>
 </section>
@@ -1209,46 +1187,34 @@ ${message || "No additional message"}
   function handleSubmit(e) {
   e.preventDefault();
 
-  const name = document.getElementById("fname").value;
-  const phone = document.getElementById("phone").value;
+  const name = document.getElementById("fname").value.trim();
+  const phone = document.getElementById("phone").value.trim();
   const service = document.getElementById("service").value;
-  const date = document.getElementById("date").value;
-  const enddate = document.getElementById("enddate").value;
-  const location = document.getElementById("location").value;
-  const message = document.getElementById("message").value;
-
-  if(name==="" || phone==="" || service===""){
-      alert("Please fill all required fields.");
-      return;
-  }
+  const date = document.getElementById("date").value || "Not specified";
+  const enddate = document.getElementById("enddate").value || "N/A";
+  const location = document.getElementById("location").value.trim() || "Not specified";
+  const message = document.getElementById("message").value.trim() || "No additional details provided";
 
   const whatsappNumber = "918866383635";
 
-  const text =
+  const text = 
 `📸 *New Photography Enquiry*
 
-👤 Name : ${name}
+👤 *Name:* ${name}
+📱 *Mobile:* ${phone}
+🎉 *Service:* ${service}
+📅 *Start Date:* ${date}
+📅 *End Date:* ${enddate}
+📍 *Location:* ${location}
 
-📱 Mobile : ${phone}
-
-🎉 Service : ${service}
-
-📅 Event Date : ${date}
-
-📅 End Date : ${enddate}
-
-📍 Location : ${location}
-
-📝 Requirements :
+📝 *Requirements:*
 ${message}`;
 
-  window.open(
-    `https://wa.me/${8866383635}?text=${encodeURIComponent(text)}`,
-    "_blank"
-  );
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
 
+  window.open(url, "_blank");
   e.target.reset();
-  }
+}
   
 
 // ── SCROLL REVEAL ──
