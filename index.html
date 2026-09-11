@@ -78,9 +78,18 @@
       height: 80px;
     }
     .nav-logo {
-      font-family: var(--font-serif); font-size: 22px; font-weight: 700;
-      color: var(--white); letter-spacing: 1px; transition: color 0.4s;
-    }
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    height: 60px;
+}
+
+    .nav-logo video {
+    width: 145px;
+    height: 55px;
+    object-fit: contain;
+    display: block;
+}
     .nav-logo span { color: var(--accent); }
     #navbar.scrolled .nav-logo { color: var(--dark); }
     .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
@@ -390,7 +399,16 @@
 <!-- ── NAVBAR ── -->
 <nav id="navbar">
   <div class="nav-inner">
-    <a href="#" class="nav-logo">Gohil photo<span>&nbsp;Studio</span></a>
+  <!--  <a href="#" class="nav-logo">Gohil photo<span>&nbsp;Studio</span></a> -->
+    <a href="#" class="nav-logo">
+    <video
+        src="assets/logo-animation.mp4"
+        autoplay
+        muted
+        loop
+        playsinline>
+    </video>
+    </a>
     <ul class="nav-links">
       <li><a href="#hero">Home</a></li>
       <li>
